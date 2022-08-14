@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<style>
+  /*In the style tag you will find CSS for most of the features*/
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.0 rem;
+    /* Footer height */
+  }
+
+  .fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 50%;
+  }
+
+  .fa:hover {
+    opacity: 0.7;
+  }
+
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+    float: right;
+  }
+
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+    float: right;
+  }
+
+  .fa-instagram {
+    background: #125688;
+    color: white;
+    float: right;
+
+  }
+</style>
+<!-- Welcome Section -->
+
+<head>
+  <title id="title">Location</title>
+  <meta charset="utf-8"> <!-- NAVBAR StyleSheet -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="GlobalCSS.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body id="body" >
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+   
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar17">
+      <ul class="navbar-nav mr-auto">
+        <img src="Sitehours logo2.png" style="height:65px">
+        
+        <li class="nav-item"> <a class="nav-link" href="EmployeeLocations.html">Locations map</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="Accounts page.html">Accounts and Sites</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="Supplyrequests.html">Supply Requests</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="ReportsPage.html">Reports</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="">Logout</a> </li>
+      </ul>
+    </div>
+
+</nav>
+  <!--for this page what you need to do is make the dynamic link table thing and the ability to sort by work date and time. Rather difficult addmittedly espcially with the most-->
+  <!--the most complex of the php scripts to sort through all that given how hard it is to store data in the elements on a html element, best of luck-->
+  <div id="topdiv" style="margin: auto;width:80%">
+    <h3 id="Header" style="text-align: center;">Locations</h3>
+    <div id="searchbar location" style="display:flex;width:80%"></div>
+    <div id="datething" style="display:flex;width:80%">
+      <div style="margin-right:20px ;">
+        <p>Start date</p>
+        <input id="StartingDate" type="date">
+      </div>
+      <div>
+        <p>End date</p>
+        <input id="EndDate" type="date">
+      </div>
+      <form style="margin:10px;">
+        <input type="radio" id="SiteRadio" name="type" value="Site" onclick="outme()">
+        <label for="SiteRadio">Show for site</label><br>
+        <input type="radio" id="EmployeeRadio" name="type" value="Employee" onclick="outme()">
+        <label for="EmployeeRadio" onload="startup()">Show for employee</label><br>
+      </form>
+      <div>
+        <div style="display:flex;">
+        <input type="text" id="timesearch" onkeyup="searchbar('timesearch','timechoice')" onclick="showSelectthing('timechoice')" placeholder="Search"
+          title="Names" style="width:70%;display: flex;">
+        <button style="width:10%;display: flex;text-align:center;align-items: center;" onclick="toggleDiv('timechoice')">
+          <p style="width:100%;height:100%;text-align:center;align-items: center;display:grid ;">▼</p>
+        </button>
+        
+      </div>
+        <ul id="timechoice" style="display:none ;position: absolute;" class="menus">
+          <li><a href="#">error</a></li>
+        </ul>
+        
+      </div>
+      <button id="Submit" onclick="MakeTime()">Generate Report</button>
+    </div>
+
+    <div id="map" style="height:400px;width:400px;display: none;">
+
+    </div>
+    <button id="hiddeninp" style="display:none"></button>
+  </div>
+</body>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAA-5bmH-JKyTa0i7YsRZ2Iw3DKAen2c-g&callback=initMap">
+</script>
+
+<script>
+  var locations
+  window.onload = function() {
+    startup();
+  }
+  
+function Mapmake(locations){
+//establish map 
+setMapOnAll(null);
+for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+  }
+}
+  function setMapOnAll(map) {
+//for (var i = 0; i < markers.length; i++) {
+//markers[i].setMap(map);
+//}
+}
+  function initMap(){
+      // Map options
+      var options = {
+        zoom:8,
+       center:{lat:54.557911,lng:-5.8151529}
+      }
+
+      // New map
+      var map = new google.maps.Map(document.getElementById('map'), options);
+
+      // Listen for click on map
+      google.maps.event.addListener(map, 'click', function(event){
+        // Add marker
+        addMarker({coords:event.latLng});
+      });
+    }
+  function startup() {
+    //map
+
+
+
+
+    startingdate = document.getElementById("StartingDate")
+    enddate = document.getElementById("EndDate")
+    date = new Date
+    themonth="0"
+    thetoday="0"
+    const today = date.getDate()
+    const month = date.getMonth() +1
+    const year = date.getFullYear()
+    var datesetter = year+"-"+month+"-"+today
+    if(month< 10){
+      themonth = "0"+ month.toString()
+    }else{
+      themonth = month.toString()
+    }
+    if(today< 10){
+      thetoday = "0"+ today.toString()
+    }else{
+      thetoday =  today.toString()
+    }
+    var datesetter = year+"-"+themonth+"-"+thetoday
+
+    document.getElementById("EndDate").value = datesetter
+    //enddate.value ="2022-05-18"
+    const now = new Date();
+    past = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)
+
+    if(past.getMonth()< 10){
+      setter = past.getMonth()+1
+      themonth = "0"+setter
+    }else{
+      themonth =(past.getMonth()+1).toString
+    }
+    if(past.getDate()< 10){
+      thetoday = "0"+ past.getDate().toString()
+    }else{
+      thetoday =  past.getDate().toString()
+    }
+    var startingdato = past.getFullYear()+"-"+themonth+"-"+thetoday
+
+    startingdate.value = startingdato
+
+    populatedeleAccountlist()
+    populatedeleSitelist()
+    
+    outme()
+  }
+  function senddate() {
+    startingdate = document.getElementById("StartingDate").value
+ 
+    if (startingdate == "") {
+      startingdate = "*"
+    }
+    enddate = document.getElementById("StartingDate").value
+
+    if (enddate == "") {
+      enddate = "*"
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", yourUrl, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    startingdate = document.getElementById("StartingDate").value
+    
+    xhr.send(JSON.stringify({
+      "startdate": value,
+      "enddate": value,
+
+    }));
+  }
+  function retrieveworksite() {
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState == 4) {
+        alert(ajax.responseText);
+        return ajax.response;
+      }
+    };
+    ajax.open("GET", "GetEmployees.php", true);
+    ajax.send(null);
+  }
+  function GenerateLists(){
+
+  }
+  function outme() {
+    document.getElementById("timesearch").value=""
+    document.getElementById("Submit").value=""
+    var type = document.getElementsByName("type");
+    for (i = 0; i < type.length; i++) {
+      if (type[i].checked) {
+        if(type[i].value =="Site"){
+          
+          document.querySelectorAll(".EmployeeSel").forEach(a=>a.style.display = "none");
+          document.querySelectorAll(".SiteElements").forEach(a=>a.style.display = "block");
+          document.getElementById("hiddeninp").value="Site"
+
+        }
+        if(type[i].value =="Employee"){
+          document.querySelectorAll(".EmployeeSel").forEach(a=>a.style.display = "block");
+          document.querySelectorAll(".SiteElements").forEach(a=>a.style.display = "none");
+          document.getElementById("hiddeninp").value="Employee"
+        }
+        
+      }
+    }
+  }
+
+  //show a div
+  function showSelectthing(pass) {
+   
+    document.getElementById(pass).style.display = "block"
+  }
+//show a div
+  function showthething() {
+    
+    document.getElementById("myMenu").style.display = "block"
+  }
+//show/hide a div
+  function toggleDiv(id) {
+    var div = document.getElementById(id);
+    div.style.display = div.style.display == "none" ? "block" : "none";
+  }
+
+  //Populate everything
+ function populatedeleAccountlist(){
+  let xhr = new XMLHttpRequest();
+   message = "me"
+    xhr.open("POST", "http://host.docker.internal:8079/GetAllEmployees.php","true");        
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{}'
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+      var csv =message.split(",")
+
+  Serachbar = document.getElementById("timechoice")
+  for(i=0;i < csv.length-1;i += 3){
+      console.log()
+      listelement = document.createElement("li")
+      //Name
+      listelement.id=(csv[i])
+      //username
+      Internal = document.createElement("a")
+      Internal.innerHTML=(csv[i+1])
+      listelement.appendChild(Internal)
+      //ID
+      listelement.value=(csv[i+2])
+      //class
+      listelement.classList.add("EmployeeSel")
+     
+      Serachbar.appendChild(listelement)
+      listelement.addEventListener("click",function(){
+        document.getElementById("timesearch").value = this.childNodes[0].innerHTML
+        document.getElementById("Submit").value = this.value
+        
+      })
+  }
+       outme()
+    };
+    xhr.send("data:"+data)
+
+  }
+
+
+function populatedeleSitelist(){
+  let xhr = new XMLHttpRequest();
+  message= ""
+    xhr.open("POST", "http://host.docker.internal:8079/GetAllSites.php","true");        
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{}'
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+     
+      var csv =message.split(",")
+  
+  Serachbar = document.getElementById("timechoice")
+  if(csv.length != 0){
+    for(i=0;i < csv.length-1;i += 4){
+    listelement = document.createElement("li")
+    
+      //Name
+      listelement.id=(csv)
+      //username
+    
+      Internal = document.createElement("a")
+      Internal.innerHTML=(csv[i+1])
+     
+      if(csv[i+1]==""){
+        Internal.innerHTML=(csv[i] +" Unnamed")
+      }else{
+        Internal.innerHTML=(csv[i+1])
+      }
+      listelement.appendChild(Internal)
+      //ID
+      listelement.value=(csv[i])
+      Serachbar.appendChild(listelement)
+      listelement.classList.add("SiteElements")
+      
+        listelement.addEventListener("click",function(){
+        document.getElementById("timesearch").value = this.childNodes[0].innerHTML
+        document.getElementById("Submit").value = this.value
+        
+        })
+  }
+}
+outme()
+    };
+    xhr.send("data:"+data)
+ 
+ }
+ //test without online part
+function dummy(){
+  csv = ["a"+"V"+"d"+"D"]
+  //var csv =data_from_ajax.split(",")
+  
+  Serachbar = document.getElementById("timechoice")
+  for(i=0;i = csv.length;i += 4){
+   
+    listelement = document.createElement("li")
+      //Name
+      listelement.id=csv[1]
+      //username
+      listelement.innerHTML=(csv[i+1])
+      //ID
+      
+      listelement.value=(csv[i+2])
+        Serachbar.appendChild(listelement)
+      listelement.addEventListener("click",function(){
+        //document.getElementById("DelSearch").value = listelement.innerHTML
+       // document.getElementById("DeleteAccount").value = csv[i]
+      })
+  }
+}
+ function searchbar(first,second) {
+    // Declare variables
+    var input, filter, ul, li, a, i;
+    input = document.getElementById(first);
+    filter = input.value.toUpperCase();
+    ul = document.getElementById(second);
+    li = ul.getElementsByTagName("li");
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+      jsohing = li[i].getElementsByTagName("li")[0];
+      if (jsohing.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+      } else {
+        li[i].style.display = "none";
+      }
+    }
+  }
+
+  //sweet suffering 
+  function getsitehours(Site){
+    console.log("site execution")
+    let xhr = new   XMLHttpRequest();
+    //open request at script location
+    let headermod = "?SiteID="+Site+'&Sdate='+ document.getElementById("StartingDate").value +'&Edate='+ document.getElementById("EndDate").value
+    url= "http://host.docker.internal:8079/FetchTimeTrackingDateSite.php"+headermod;
+    console.log(url)
+    xhr.open("POST", url,"true");
+
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{SiteID:'+ Site +',Sdate:'+ document.getElementById("StartingDate").value +',Edate:'+ document.getElementById("EndDate").value +'}'
+    xhr.onload = (res) => {
+      locations
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      console.log(message)
+      //destroy the table
+      if(document.getElementById("TableContainer")!=null){
+      var elem = document.getElementById("TableContainer");
+      elem.parentNode.removeChild(elem);
+      }
+      //create the table
+      tableholder = document.createElement("div")
+      tableholder.id = "TableContainer"
+      topdive = document.getElementById("topdiv")
+      topdive.appendChild(tableholder)
+      //make the table
+      var table = document.createElement('TABLE');
+      table.border='1';
+      tableholder.appendChild(table)
+      //make top row
+      var row = document.createElement("tr");
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Name"
+      row.appendChild(toprow)
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Sitename"
+      row.appendChild(toprow)
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Date and Time"
+      row.appendChild(toprow)
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Location"
+      row.appendChild(toprow)
+      table.appendChild(row)
+      csv = message.split("~")
+
+      for(i=0;i<csv.length-1;i=i+7){
+      console.log(csv)
+      currentrow = document.createElement("tr");
+      //name
+      interow = document.createElement("th");
+      interow.innerHTML = csv[i]+csv[i+1]
+      console.log(csv[i]+csv[i+1])
+      currentrow.appendChild(interow)
+      //Sitename
+      interow = document.createElement("th");
+      interow.innerHTML = csv[i+2]
+      currentrow.appendChild(interow)
+      
+      //date time
+      interow = document.createElement("th");
+      interow.innerHTML = csv[i+5]
+      currentrow.appendChild(interow)
+      //location
+      
+      interow = document.createElement("th");
+      link = document.createElement("a");
+      split = csv[i+6].split(",")
+      link.innerHTML ="http://www.google.com/maps/place/"+csv[i+6]+"/@"+split[0]+","+split[1]+"z"
+      link.href = "http://www.google.com/maps/place/"+csv[i+6]+"/@"+split[0]+","+split[1]+"z"
+      //locations.push([(csv[i+2]+":"+(csv[i]+csv[i+1])),split[0],split[1]])
+      console.log(locations)
+
+      interow.appendChild(link)
+      currentrow.appendChild(interow)
+      table.appendChild(currentrow)
+      
+      }
+      /*
+      setMapOnAll(locations);
+      Mapmake()
+      */
+    };
+    
+    xhr.send(data);
+    console.log(xhr.status);
+    console.log(xhr.responseText);
+
+  }
+  function getEidehours(Eid){
+    console.log("employee execution")
+    let xhr = new   XMLHttpRequest();
+    let headermod = "?EmployeeID="+Eid+'&Sdate='+ document.getElementById("StartingDate").value +'&Edate='+ document.getElementById("EndDate").value
+    url= "http://host.docker.internal:8079/FetchTimeTrackingEmployee.php"+headermod;
+    xhr.open("POST", url,"true");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{EmployeeID:'+ Eid +',Sdate:'+ document.getElementById("StartingDate").value +',Edate:'+ document.getElementById("EndDate").value +'}'
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+      console.log(message)
+      //destroy the table
+      if(document.getElementById("TableContainer")!=null){
+      var elem = document.getElementById("TableContainer");
+      elem.parentNode.removeChild(elem);
+      }
+      //create the table
+      tableholder = document.createElement("div")
+      tableholder.id = "TableContainer"
+      topdive = document.getElementById("topdiv")
+      topdive.appendChild(tableholder)
+      //make the table
+      var table = document.createElement('TABLE');
+      table.border='1';
+      tableholder.appendChild(table)
+      //make top row
+      var row = document.createElement("tr");
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Name"
+      row.appendChild(toprow)
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Sitename"
+      row.appendChild(toprow)
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Date and Time"
+      row.appendChild(toprow)
+      toprow = document.createElement("th");
+      toprow.innerHTML = "Location"
+      row.appendChild(toprow)
+      table.appendChild(row)
+      csv = message.split("~")
+
+      for(i=0;i<csv.length-1;i=i+7){
+        console.log(csv)
+      currentrow = document.createElement("tr");
+      //name
+      interow = document.createElement("th");
+      interow.innerHTML = csv[i]+csv[i+1]
+      console.log(csv[i]+csv[i+1])
+      currentrow.appendChild(interow)
+      //Sitename
+      interow = document.createElement("th");
+      interow.innerHTML = csv[i+2]
+      currentrow.appendChild(interow)
+      //date time
+      interow = document.createElement("th");
+      interow.innerHTML = csv[i+5]
+      currentrow.appendChild(interow)
+      //location
+      interow = document.createElement("th");
+      link = document.createElement("a");
+      split = csv[i+6].split(",")
+      link.innerHTML ="http://www.google.com/maps/place/"+csv[i+6]+"/@"+split[0]+","+split[1]+"z"
+      link.href = "http://www.google.com/maps/place/"+csv[i+6]+"/@"+split[0]+","+split[1]+"z"
+      interow.appendChild(link)
+      currentrow.appendChild(interow)
+      table.appendChild(currentrow)
+      }
+    };
+    xhr.send();
+    console.log(xhr.status);
+    console.log(xhr.responseText);
+
+  }
+function MakeTime(){
+  passme = document.getElementById("Submit").value
+  requesttype = document.getElementById("hiddeninp").value
+  console.log(requesttype)
+  if(requesttype == "Site"){
+    console.log("site time"+requesttype)
+    getsitehours(passme)
+  } 
+  if(requesttype == "Employee"){
+    console.log("employee time"+requesttype)
+    getEidehours(passme)
+  }
+}
+</script>
+</html>
