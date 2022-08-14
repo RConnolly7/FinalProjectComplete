@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<style>
+  /*In the style tag you will find CSS for most of the features*/
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.0 rem;         /* Footer height */
+}
+
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
+.fa:hover {
+    opacity: 0.7;
+}
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+  float: right;
+}
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+  float: right;
+}
+.fa-instagram {
+  background: #125688;
+  color: white;
+  float: right;
+
+}
+</style>
+<!-- Welcome Section -->
+<head>
+  <title>Welcome</title>
+  <meta charset="utf-8"> <!-- NAVBAR StyleSheet -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div>
+    <h3 style="display: flex;justify-content: center;">
+        Login page
+    </h3>
+    <br>
+    <div style="display: flex;justify-content: center;">
+        <div>
+          <p id="errormessage" style="display: none;"></p>
+            <P style="margin-bottom: 0px;">Username</P>
+
+            <input id="usernameinp">
+            </input>
+            <br>
+            <P  style="margin-bottom: 0px;">password</P>
+            <input id="Passwordinp">
+            </input>
+            <br>
+            <button id="LoginButton" style="width:fit-contents;height: 30px;display: block;margin-top: 5px;" onclick="loginfunction()">
+            Login
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+<script>
+  errorfellow = document.getElementById("errormessage")
+document.getElementById("LoginButton").addEventListener("click", test3());
+
+function test2(){
+  al = fetch("http://192.168.56.1:8091/test.php", {
+  method: "POST", //put your method
+  headers: {
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "Access-Control-Allow-Origin": "*"
+  },
+  mode: 'no-cors' 
+});
+console.log(al)
+}
+
+  function test3() {
+    let xhr = new XMLHttpRequest();
+    //LOOK HERE ADOPT THIS CODER THE THE REST OF JS
+    xhr.open("POST", "http://host.docker.internal:8091/test.php","true");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = (res) => {
+      console.log("trace 2")
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      errorfellow.innerHTML = message;
+      console.log(message)
+    };
+    console.log("trace 3")
+    xhr.send();
+    console.log("trace 4")
+    console.log(xhr.status);
+    console.log(xhr.responseText);
+    let data = `{
+  "Id": 78912,
+  "Customer": "Jason Sweet",
+  }`;
+
+    //xhr.send(data);
+  }
+function test(){
+  test2()
+  let xhr = new XMLHttpRequest();
+  test2()
+  //xhr.Header().Set("Access-Control-Allow-Origin", "*")
+  xhr.open("POST", "http://192.168.56.1:8091/test.php");
+  xhr.setRequestHeader("Accept", "application/json");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  console.log("trace")
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+   xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+ console.log("")
+ console.log("trace 2")
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+    }
+  };
+
+
+    console.log("prepare send")
+    xhr.send(data);
+    console.log("haved send")
+    errorfellow = document.getElementById("errormessage");
+    errorfellow.value = xhr.status
+    console.log("status processed")
+    errorfellow.innerHTML = xhr.responseText
+    console.log("responce processed")
+    errorfellow.style = "display:block;"
+    console.log("ending request")
+}
+function LogCheck(){
+ errorfellow = document.getElementById("errormessage");
+if(document.getElementById("usernameinp").value != ""){
+  if(document.getElementById("Passwordinp").value != ""){
+    //send request
+    const xhr = new XMLHttpRequest()
+    // open a POST request
+    xhr.open("POST", "/food")
+    // set content-type header to JSON
+    xhr.setRequestHeader("Content-Type", "application/json");
+    // send JSON data to the remote server
+    xhr.send(JSON.stringify(food))
+
+    // Event Handlers
+
+    // track data upload progress
+    xhr.upload.onprogress = function (e) {
+      console.log(`${e.loaded}B of ${e.total}B uploaded!`)
+    }
+
+    // triggered when data upload is finished
+    xhr.upload.onload = function (e) {
+      console.log("Upload completed")
+    }
+
+    // triggered when the response is fully received
+    xhr.onload = function () {
+      console.log(xhr.status)
+    }
+
+// triggered due to a network-level error
+xhr.onerror = function() {
+  console.log("Network error occurred")
+}
+  }else{
+    errorfellow.value = "You must input a password"
+    errorfellow.innerHTML = "You must input a password"
+    errorfellow.style = "display:block;"
+    console.log("You must input a password")
+  }
+}else{
+  errorfellow.innerHTML = "You must input a username"
+    errorfellow.style = "display:block;"
+}
+}
+function loginfunction(){
+  let xhr = new XMLHttpRequest();
+  username = document.getElementById("usernameinp").value
+  password = document.getElementById("Passwordinp").value
+  headerdata="?username="+username+"&password="+password;
+  url = "http://host.docker.internal:8079/UserlogMan.php"+headerdata
+  console.log(url)
+    //change web address
+    xhr.open("POST", url,"true");
+    //set datatype
+    xhr.setRequestHeader("Accept", "application/json");
+    //set datatype
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = (res) => {
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      if (message == "success"){
+        open("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Accounts%20page.html")
+        
+      }
+    }
+    xhr.send();
+}
+
+
+
+</script>
+</html>

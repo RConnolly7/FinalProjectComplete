@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+<style>
+  /*In the style tag you will find CSS for most of the features*/
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.0 rem;
+    /* Footer height */
+  }
+
+  .fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 50%;
+  }
+
+  .fa:hover {
+    opacity: 0.7;
+  }
+
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+    float: right;
+  }
+
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+    float: right;
+  }
+
+  .fa-instagram {
+    background: #125688;
+    color: white;
+    float: right;
+
+  }
+</style>
+<!-- Welcome Section -->
+
+<head>
+  <title>Landing page</title>
+  <meta charset="utf-8"> <!-- NAVBAR StyleSheet -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="GlobalCSS.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+   
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar17">
+      <ul class="navbar-nav mr-auto">
+        <img src="Sitehours logo2.png" style="height:65px">
+        
+        <li class="nav-item"> <a class="nav-link" href="EmployeeLocations.html">Locations map</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="Accounts page.html">Accounts and Sites</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="Supplyrequests.html">Supply Requests</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="ReportsPage.html">Reports</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="">Logout</a> </li>
+      </ul>
+    </div>
+
+</nav>
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="text-align: bg-info shadow-none rounded border-info border text-center"><b> Account page</b></h3>
+        </div>
+      </div>
+      <!--ACCOUNT  SECTION -->
+      <div class="row">
+        <div class="col-md-12" style="display: flex;">
+          <div id="create account" style="width:50% ;">
+            <p>create account</p>
+            <button id="create" onclick="toggleDiv('CreateUser')">Create Acount</button>
+            <div class="hiddem form" id="CreateUser" style="display:none;">
+              <p>First Name</p>
+              <input id="createFN" class="accountform">
+              <p>Last Name</p>
+              <input id="createlN" class="accountform">
+              <p>User Name</p>
+              <input id="createUN" class="accountform">
+              <p>Password</p>
+              <input id="createPW" class="accountform">
+              <p>Confirm password</p>
+              <input id="ConfirmPWCreate" class="accountform">
+              <p>Management?</p>
+              <input type="checkbox" id="Management?" name="Management" value="Management">
+              <br>
+              <button id="UserSubmit" onclick="Submituser()">Submit</button>
+            </div>
+          </div>
+
+          <div id="delete account" style="width:50% ;">
+            <p>Permantly delete account</p>
+            <button id="delete" onclick="toggleDiv('DeleteAccount')">Choose account</button>
+            <div class="hiddem form" id="DeleteAccount" style="display:none" >
+              <div>
+                <div style="display:flex;">
+                <input type="text" id="DelSearch" onkeyup="searchbar('DelSearch','DelAcc')" onclick="showSelectthing('DelAcc')" placeholder="Search"
+                  title="Names" style="width:70%;display: flex;">
+                <button style="width:10%;display: flex;text-align:center;align-items: center;" onclick="toggleDiv('DelAcc')">
+                  <p style="width:100%;height:100%;text-align:center;align-items: center;display:grid ;">▼</p>
+                </button>
+                <button id="DeleteEmployee" onclick="deletesite()">Delete Account</button>
+              </div>
+                <ul id="DelAcc" style="display:none" class="menus">
+                  <li><a href="#">error</a></li>
+                </ul>
+                
+              </div>
+              </div>
+          </div>
+          <h4 class="text-center"></h4>
+        </div>
+        <div class="col-md-12" style="display: flex;">
+          <div id="Modify account" style="width:50% ;">
+            <p>Modify account details</p>
+            <button id="create" onclick="toggleDiv('Moduser')">Choose account</button>
+
+
+
+
+
+            <div class="hiddem form" id="Moduser" style="display:none;">
+
+              <div style="display:flex;">
+                <input type="text" id="mySearch2" onkeyup="searchbar('mySearch2','myMenu')" onclick="showthething()" placeholder="Search"
+                  title="Names" style="width:70%;display: flex;">
+                <button id="moduservalue" style="width:10%;display: flex;text-align:center;align-items: center;"
+                  onclick="toggleDiv('myMenu')">
+                  <p style="width:100%;height:100%;text-align:center;align-items: center;display:grid ;">▼</p>
+                </button>
+
+              </div>
+              <ul id="myMenu" style="display:none">
+                <li><a href="#">error</a></li>
+              </ul>
+
+
+              <p>First Name</p>
+              <input class="accountform" id="modFn">
+              <p>Last Name</p>
+              <input class="accountform" id="modLN">
+              <p>User Name</p>
+              <input id="ModUN" class="accountform">
+              <p>Password</p>
+              <input class="accountform" id="ModPW">
+              <p>Confirm password</p>
+              <input class="accountform" id="ModPWCon">
+              <p>Management?</p>
+              <input type="checkbox" id="modmanagement" name="Management" value="Management">
+              <br>
+              <button id="ModUserSubmit" onclick="ModifyUser()">Submit</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- SITE SECTION -->
+      <div class="row">
+        <div class="col-md-12" style="display: flex;">
+
+          <div id="create site" style="width:50% ;">
+            <p>create site</p>
+            <button id="create" onclick="toggleDiv('CreateSite')">Create site</button>
+            <div class="hiddem form" id="CreateSite" style="display:none;">
+              <p>Site Name</p>
+              <input id="CreateSiteNm" class="accountform">
+              <p>Site Number</p>
+              <input id="CreateSiteNB" class="accountform">
+              <p>Start date</p>
+              <input id="CreateStDt" class="accountform" type="date">
+              <p>end date</p>
+              <input id="CreateEndDt" class="accountform" type="date">
+              <p>Location</p>
+              <input id="CreateLoc" class="accountform" >
+              <br>
+              <button id="SiteSubmit" onclick="CreateSiteFun()" >Submit</button>
+
+            </div>
+          </div>
+
+          <div id="delete account" style="width:50% ;">
+            <p>Permantly delete Site</p>
+            <button id="DeleteSiteToggle" onclick="toggleDiv('delsitehid')">Choose Site</button>
+            <div class="hiddem form" id="delsitehid" style="display:none;">
+            <div>
+              <div style="display:flex;">
+              <input type="text" id="DelSearchS" onkeyup="searchbar('DelSearchS','DelOpts')" onclick="showSelectthing('DelOpts')" placeholder="Search"
+                title="Names" style="width:70%;display: flex;">
+              <button style="width:10%;display: flex;text-align:center;align-items: center;" onclick="toggleDiv('DelOpts')">
+                <p style="width:100%;height:100%;text-align:center;align-items: center;display:grid ;">▼</p>
+              </button>
+              <button id="delete site" onclick="deletesite()">Delete Site</button>
+            </div>
+              <ul id="DelOpts" style="display:none" class="menus">
+                <li><a href="#">error</a></li>
+              </ul>
+              
+            </div>
+            </div>
+            </div>
+            <h4 class="text-center"></h4>
+            </div>
+            <div class="col-md-12" style="display: flex;">
+              <div id="Modify account" style="width:50% ;">
+            <p>Modify account details</p>
+            <button id="create" onclick="toggleDiv('ModSite')">Choose account</button>
+
+
+
+
+
+            <div class="hiddem form" id="ModSite" style="display:none;">
+
+              <div style="display:flex;">
+                <input type="text" id="mySearch" onkeyup="searchbar('mySearch','SiteMenu')" onclick="showSelectthing('SiteMenu')" placeholder="Search"
+                  title="Names" style="width:70%;display: flex;">
+                <button id="ModSiteBtn" style="width:10%;display: flex;text-align:center;align-items: center;"
+                  onclick="toggleDiv('SiteMenu')">
+                  <p style="width:100%;height:100%;text-align:center;align-items: center;display:grid ;">▼</p>
+                </button>
+
+              </div>
+              <ul id="SiteMenu" style="display:none">
+                <li><a href="#">error</a></li>
+              </ul>
+
+
+              <p>Site Name</p>
+              <input id="ModSiteNM" class="accountform">
+              <p>Site Number</p>
+              <input id="ModSiteNb" class="accountform">
+              <p>Start date</p>
+              <input id="ModSiteStDt" class="accountform" type="date">
+              <p>end date</p>
+              <input id="ModSiteEndDt" class="accountform" type="date">
+              <p>Location</p>
+              <input id="ModLoc" class="accountform" onclick="ModSiteFun()" >
+              <br>
+              <button id="ModSubmit">Submit</button>
+
+            </div>
+          </div>
+          <div id="map" style="width: 500px; height: 400px;"></div>
+        </div>
+
+      </div>
+
+      <div class="container">
+        <hr class="d-sm-none">
+      </div>
+      <div class="py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12"></div>
+          </div>
+        </div>
+      </div>
+      <div class="py-5 border">
+        <div class="container">
+          <div class="row">
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Section -->
+      <footer class="footer"></footer> <!-- Footer Section -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</body>
+<script>
+  function searchbar(first,second) {
+    // Declare variables
+    var input, filter, ul, li, a, i;
+    input = document.getElementById(first);
+    filter = input.value.toUpperCase();
+    ul = document.getElementById(second);
+    li = ul.getElementsByTagName("li");
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+      a = li[i].getElementsByTagName("a")[0];
+      if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+      } else {
+        li[i].style.display = "none";
+      }
+    }
+  }
+  function showSelectthing(pass) {
+    console.log("show the thing")
+    document.getElementById(pass).style.display = "block"
+  }
+  function showthething() {
+    console.log("show the thing")
+    document.getElementById("myMenu").style.display = "block"
+  }
+  function togglething() {
+    list = document.getElementById("myMenu")
+    state = window.getComputedStyle(list).display.toString = "block"
+    console.log(state)
+    console.log(state == "block")
+    list.style.display = "block"
+    console.log(state)
+    console.log(state == "block")
+    console.log((window.getComputedStyle(list).display.toString = "block"))
+    console.log((document.getElementById("myMenu").style.display))
+    setTimeout(1000100)
+    console.log((document.getElementById("myMenu").style.display))
+    if (window.getComputedStyle(list).display.toString = "block") {
+      document.getElementById("myMenu").style.display = "none"
+      console.log((document.getElementById("myMenu").style.display) + " the block if")
+    }
+    else {
+      document.getElementById("myMenu").style.display = "block"
+      console.log(document.getElementById("myMenu").style.display + "3")
+    }
+    console.log((document.getElementById("myMenu").style.display))
+    list.style.display = "block"
+  }
+  function toggleDiv(id) {
+    var div = document.getElementById(id);
+    div.style.display = div.style.display == "none" ? "block" : "none";
+  }
+  function Submituser(){
+    Firstname = document.getElementById("createFN").value
+    Lastname = document.getElementById("createlN").value
+    Username = document.getElementById("createUN").value
+    Password = document.getElementById("createPW").value
+    Manager= 1
+    if( document.getElementById("Management?").checked){
+      Manager = 1
+    }else{
+      Manager = 1
+    }
+    
+    if(Password ==document.getElementById("ConfirmPWCreate").value ){
+      //creates request
+      let xhr = new XMLHttpRequest();
+    headerdata = "?Fname="+Firstname+"&Lname="+Lastname+"&Usernm="+Username+"&pwhsh="+Password+"&type="+Manager
+    url = "http://host.docker.internal:8079/CreateEmployee.php"+headerdata
+    //change web address
+    xhr.open("POST", url,"true");
+    //set datatype
+    xhr.setRequestHeader("Accept", "application/json");
+    //set datatype
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = (res) => {
+      
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      
+      console.log(message)
+    };
+    xhr.send();
+    console.log(xhr.status);
+    console.log(xhr.responseText);
+
+
+    }
+  }
+    function ModifyUser(){
+    Firstname = document.getElementById("createFN").value
+    Lastname = document.getElementById("createLN").value
+    Username = document.getElementById("createUN").value
+    Password = document.getElementById("createPW").value
+    Manager = document.getElementById("Management?").value
+    Eid= document.getElementById("moduservalue").value
+    failcheck = false
+    
+    if(Password == document.getElementById("ConfirmPWCreate").value ){
+      //ccheck if values are empty and replace them current values
+      let UserRequest = new XMLHttpRequest();
+      headerdata = "?UserID="+Eid;
+      url =" http://host.docker.internal:8079/GetSingleEmployee.php" +headerdata;
+       document.getElementById("DelSearch").value = listelement.innerHTML
+       UserRequest.open("POST", url,"true");
+       UserRequest.setRequestHeader("Accept", "application/json");
+       UserRequest.setRequestHeader("Content-Type", "application/json");
+        UserRequest.onload = (res) => {
+          message = res['target']['response'];
+          csveter=message.split(",")
+          if(Firstname == ""){
+            Firstname = csveter[0]
+          }
+          if(Lastname == ""){
+            Lastname = csveter[1]
+          }
+          if(Username == ""){
+            Username = csveter[2]
+          }
+        }
+        UserRequest.send()
+      //prevent ussage of existing username
+      let Usernames = new XMLHttpRequest();
+      headerdata = "?UserID="+Eid;
+      url =" http://host.docker.internal:8079/GetSingleEmployee.php" +headerdata;
+       document.getElementById("DelSearch").value = listelement.innerHTML
+       Usernames.open("POST", url,"true");
+       Usernames.setRequestHeader("Accept", "application/json");
+       Usernames.setRequestHeader("Content-Type", "application/json");
+       Usernames.onload = (res) => {
+          message = res['target']['response'];
+          csveter=message.split(";")
+          Stringmatch = csveter.map(e => e.toLocaleLowerCase()).includes(Username);  
+          if (Stringmatch == true){
+            failcheck = true
+            alert("Username is already is use choose a different one")
+          }
+        }
+        Usernames.send()
+      if(failcheck = false){
+      let xhr = new XMLHttpRequest();
+      headerdata = "?Fname="+Firstname+"&Lname="+Lastname+"&Usernm="+Username+"&pwhsh="+Password+"&type="+Manager+"&Eid="+Eid
+    //this is the correct web address
+    url = "http://host.docker.internal:8079/ModUser.php"+headerdata
+    xhr.open("POST",url,"true");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{"FirstName":'+ Firstname +',"LastName":'+ Lastname +', "UserName":'+ username +',"PassWord":'+ Password +',"Manager":'+ Manager.toString +'}'
+    xhr.onload = (res) => {
+      
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      
+      console.log(message)
+    };
+    xhr.send();
+    console.log(xhr.status);
+    console.log(xhr.responseText);
+    }
+  }else{
+    alert("passwords don't match")
+  }
+  }
+
+  function CreateSiteFun(){
+    
+    SiteName = document.getElementById("CreateSiteNm").value
+    SiteNum = document.getElementById("CreateSiteNB").value.toString()
+    console.log(SiteName)
+    console.log("?SiteName="+SiteName)
+    StartDate = document.getElementById("CreateStDt").value
+    EndDate = document.getElementById("CreateEndDt").value
+    LocationT = document.getElementById("CreateLoc").value
+    if(SiteName != null && StartDate != "" && EndDate != "" && LocationT != "" ){
+      let xhr = new XMLHttpRequest();
+    
+    //change web address
+    let header ="?HOLDER="+"HOLDER"+ "&foo=" + document.getElementById("CreateSiteNm").value +"& SiteNum="+SiteNum+"&StartDate="+StartDate+"&EndDate="+EndDate+"&LocationT="+LocationT
+    url = "http://host.docker.internal:8079/CreateSite.php" +header
+    console.log("url : "+url)
+    xhr.open("POST", url,"true");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = (res) => {
+      
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      console.log(message)
+    };
+    xhr.send();
+    console.log(xhr.status);
+    console.log(xhr.responseText);
+    }
+  }
+  function ModSiteFun(){
+    SiteName = document.getElementById("ModSiteNm").value
+    SiteNum = document.getElementById("ModSiteNB").value
+    StartDate = document.getElementById("ModStDt").value
+    EndDate = document.getElementById("ModEndDt").value
+    LocationT = document.getElementById("ModLoc").value
+    if(SiteName != null && StartDate != "" && EndDate != "" && LocationT != "" ){
+      let xhr = new XMLHttpRequest();
+    
+    //change web address
+    let header = "?Siteid="+Siteid+"&SiteName="+SiteName+"&SiteNum="+SiteNum+"&StartDate="+StartDate+"&EndDate="+CreateEndDt+"&LocationT="+LocationT
+    url ="http://host.docker.internal:8091/ModSite.php"+ header
+    xhr.open("POST", url,"true");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{"SiteName":'+ SiteName +',"SiteNum":'+ SiteNum +', "StartDate":'+ StartDate +',"EndDate":'+ CreateEndDt +',"LocationT":'+ LocationT +'}'
+    xhr.onload = (res) => {
+      
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      console.log(message)
+    };
+    xhr.send();
+    console.log(xhr.status);
+    console.log(xhr.responseText);
+    }
+  }
+ function createreports(CSVFILE){
+  construct = CSVreader(CSVFILE)
+  //for the first generated div make visible for remaining divs invisible until button is clikec
+  i=0
+  Username = construct[0]
+  firstoNameo = construct[1]
+  LasteoNameo = construct[2]
+  creationdate = construct[3]
+  theMessage = construct[4]
+  TheImageBase64 = construct[5]
+  SiteID = construct[6]
+  SiteNamerino = construct[7]
+  state = construct[8]
+  ProblemIdent = construct[9]
+  
+}
+ function CSVreader(CSVfile){
+  var CSVEater = CSVfile.split(',')
+  return CSVEater
+ }
+ 
+ function PopulateEmployees(){
+  $.get('http://host.docker.internal:8091/GetAllEmployees.php', function(data) {
+  data_from_ajax = data;
+  var csv =data_from_ajax.split(",")
+  Serachbar = document.getElementById("myMenu")
+  for(i=0;i < Serachbar.length;i += 3){
+    
+      listelement = document.createElement("li")
+      //Name
+      listelement.id=(csv[i])
+      //username
+      listelement.innerHTML=(csv[i+1])
+      //ID
+      listelement.value=(csv[i+2])
+      Serachbar.appendChild(listelement)
+      //secondary call in on listner function
+      listelement.addEventListener("click",function(){
+        xhr.open("POST", "http://host.docker.internal:8091/GetSingleEmployee.php","true");
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = '{"UserID":'+ listelement.value +'}'
+        xhr.onload = (res) => {
+      
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      csveter=message.split(",")
+      document.getElementById("modFN").value = csveter[0]
+      document.getElementById("modLN").value = csveter[1]
+      document.getElementById("modUN").value = csveter[2]
+      if(csveter[3]==1){
+        document.getElementById("Management?").checked = true
+      }else{
+        document.getElementById("Management?").checked = false
+      }
+        }
+      })
+  }
+  });
+ }
+window.onload= populatedeleSitelist()
+
+ function populatedeleSitelist(){
+  let xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://host.docker.internal:8079/GetAllSites.php","true");        
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{}'
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+      console.log(message)
+      var csv =message.split(",")
+  
+  Serachbar = document.getElementById("SiteMenu")
+  if(csv.length != 0){
+    for(i=0;i < csv.length-1;i += 4){
+    listelement = document.createElement("li")
+    
+      //Name
+      listelement.id=(csv)
+      //username
+    
+      Internal = document.createElement("a")
+      Internal.innerHTML=(csv[i+1])
+     
+      if(csv[i+1]==""){
+        Internal.innerHTML=(csv[i] +" Unnamed")
+      }else{
+        Internal.innerHTML=(csv[i+1])
+      }
+      listelement.appendChild(Internal)
+      //ID
+      listelement.value=(csv[i])
+      Serachbar.appendChild(listelement)
+      listelement.classList.add("SiteElements")
+      document.getElementById("ModSiteBtn").value = (csv[i])
+        listelement.addEventListener("click",function(){
+          
+          document.getElementById("mySearch").value =  this.childNodes[0].innerHTML
+          document.getElementById("ModSiteBtn").value=this.value
+          ModSitePopulate()
+        })
+  }
+}}
+xhr.send()
+ }
+
+
+ function ModSitePopulate(){
+      let xhr = new XMLHttpRequest();
+      headerdata = "?Siteid="+document.getElementById("ModSiteBtn").value
+      url =" http://host.docker.internal:8079/GetSingleSite.php" +headerdata;
+       document.getElementById("DelSearch").value = listelement.innerHTML
+        xhr.open("POST", url,"true");
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = '{"SiteID":'+ listelement.value +'}'
+        xhr.onload = (res) => {
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      csveter=message.split(",")
+      console.log(csveter)
+      document.getElementById("ModSiteNM").value = csveter[1]
+      document.getElementById("ModSiteNb").value = csveter[0]
+      document.getElementById("ModSiteStDt").value = csveter[3]
+      document.getElementById("ModSiteEndDt").value = csveter[2]
+      document.getElementById("ModLoc").value = csveter[4]
+        }
+        xhr.send()
+      }
+  
+window.onload = populatedeleSitelist2()
+ function populatedeleSitelist2(){
+  let xhr = new XMLHttpRequest();
+    console.log("£")
+    xhr.open("POST", "http://host.docker.internal:8079/GetAllSites.php","true");        
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{}'
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+      console.log(message)
+      var csv =message.split(",")
+  
+  Serachbar = document.getElementById("DelOpts")
+  if(csv.length != 0){
+    for(i=0;i < csv.length-1;i += 4){
+    listelement = document.createElement("li")
+    
+      //Name
+      listelement.id=(csv)
+      //username
+    
+      Internal = document.createElement("a")
+      Internal.innerHTML=(csv[i+1])
+     
+      if(csv[i+1]==""){
+        Internal.innerHTML=(csv[i] +" Unnamed")
+      }else{
+        Internal.innerHTML=(csv[i+1])
+      }
+      listelement.appendChild(Internal)
+      //ID
+      listelement.value=(csv[i])
+      Serachbar.appendChild(listelement)
+      listelement.classList.add("SiteElements")
+      document.getElementById("ModSiteBtn").value = (csv[i])
+        listelement.addEventListener("click",function(){
+          
+          document.getElementById("DelSearchS").value =  this.childNodes[0].innerHTML
+          document.getElementById("delete site").value=this.value
+          
+        })
+  }
+}}
+xhr.send()
+ }
+
+ window.onload = PopulateEmployeeDeletion()
+ function PopulateEmployeeDeletion(){
+  let xhr = new XMLHttpRequest();
+    console.log("£")
+    xhr.open("POST", "http://host.docker.internal:8079/GetAllEmployees.php","true");        
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{}'
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+      console.log(message)
+      var csv =message.split(",")
+  
+  Serachbar = document.getElementById("DelAcc")
+  if(csv.length != 0){
+    for(i=0;i < csv.length-1;i += 3){
+    listelement = document.createElement("li")
+    
+      //Name
+      listelement.id=(csv)
+      //username
+    
+      Internal = document.createElement("a")
+      Internal.innerHTML=(csv[i+1])
+     
+      if(csv[i+1]==""){
+        Internal.innerHTML=(csv[i] +" Unnamed")
+      }else{
+        Internal.innerHTML=(csv[i+1])
+      }
+      listelement.appendChild(Internal)
+      //ID
+      listelement.value=(csv[i])
+      Serachbar.appendChild(listelement)
+      listelement.classList.add("SiteElements")
+      document.getElementById("ModSiteBtn").value = (csv[i])
+        listelement.addEventListener("click",function(){          
+          document.getElementById("DelSearch").value =  this.childNodes[0].innerHTML
+          document.getElementById("DeleteEmployee").value=this.value
+          
+        })
+  }
+}}
+xhr.send()
+ }
+ window.onload = PopulateEmployeeMod()
+ function PopulateEmployeeMod(){
+  let xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://host.docker.internal:8079/GetAllEmployees.php","true");        
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = '{}'
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+      console.log(message)
+      var csv =message.split(",")
+  console.log(csv)
+  Serachbar = document.getElementById("myMenu")
+  if(csv.length != 0){
+    for(i=0;i < csv.length-1;i += 3){
+    listelement = document.createElement("li")
+    console.log(csv)
+    console.log(csv[i+3])
+      //Name
+      listelement.id=(csv[i])
+      //username
+      listelement.value  = csv[i+2]
+            Internal = document.createElement("a")
+      Internal.innerHTML=(csv[i+1])
+      
+      console.log(csv[i+2] + "LOOK HERE"+listelement.value)
+      if(csv[i+1]==""){
+        Internal.innerHTML=(csv[i] +" Unnamed")
+      }else{
+        Internal.innerHTML=(csv[i+1])
+      }
+      listelement.appendChild(Internal)
+      //ID
+      Serachbar.appendChild(listelement)
+      console.log(csv[i+2] + "LOOK HERE"+listelement.value)
+      listelement.classList.add("SiteElements")
+      listelement.addEventListener("click",function(){          
+          document.getElementById("mySearch2").value =  this.childNodes[0].innerHTML
+          document.getElementById("myMenu").value=this.value
+          document.getElementById("moduservalue").value=this.value
+          ModUserPopulate()
+        })
+  }
+}}
+xhr.send()
+ }
+
+
+ function deletesite(){
+   destroy = document.getElementById("delete site").value
+   headerdata = "?SiteID=" + destroy
+   url = "http://host.docker.internal:8079/GetSingleEmployee.php" + headerdata
+  xhr.open("POST", url,"true");
+  xhr.open("POST", url,"true");
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = '{"SiteID":'+destroy +'}'
+        xhr.onload = (res) => {
+        message = res['target']['response'];
+        }
+        xhr.send()
+ }
+ function populatedeleAccountlist(){
+  $.get('http://host.docker.internal:8091/GetEmployees.php', function(data) {
+  data_from_ajax = data;
+  var csv =data_from_ajax.split(",")
+  Serachbar = document.getElementById("DelAcc")
+  for(i=0;i < Serachbar.length;i += 3){
+    
+    listelement = document.createElement("li")
+      //Name
+      listelement.id=(csv[i])
+      //username
+      listelement.innerHTML=(csv[i+1])
+      //ID
+      listelement.value=(csv[i+2])
+            Serachbar.appendChild(listelement)
+      listelement.addEventListener("click",function(){
+        document.getElementById("DelSearch").value = listelement.innerHTML
+        document.getElementById("DeleteAccount").style="display:block;width:100px"
+        document.getElementById("DeleteAccount").value = csv[i]
+      })
+  }
+})
+ }
+ function deleteAcc(){
+   destroy = document.getElementById("DeleteEmployee").value
+   headerdata = "?Eid=" + destroy
+   url = "http://host.docker.internal:8079/DeleteSingleEmployee.php" + headerdata
+        xhr.open("POST", url,"true");
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = '{"SiteID":'+destroy +'}'
+        xhr.onload = (res) => {
+        message = res['target']['response'];
+        }
+        xhr.send()
+ }
+
+ function ModUserPopulate(){
+      let xhr = new XMLHttpRequest();
+      headerdata = "?UserID="+document.getElementById("moduservalue").value
+      url =" http://host.docker.internal:8079/GetSingleEmployee.php" +headerdata;
+      console.log(url)
+           xhr.open("POST", url,"true");
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = '{"SiteID":'+ listelement.value +'}'
+        xhr.onload = (res) => {
+      console.log(res['target']['response']);
+      message = res['target']['response'];
+      csveter=message.split(",")
+      console.log(csveter)
+      document.getElementById("modFn").value = csveter[0]
+      document.getElementById("modLN").value = csveter[1]
+      document.getElementById("ModUN").value = csveter[2]
+          if(csveter[3]=1){
+            document.getElementById("modmanagement").checked = false
+          }else{
+            document.getElementById("modmanagement").checked = true //keyboard test qwertyuiop[]asdfghjkl;'#zxcvbnm,./'
+          }
+        }
+        xhr.send()
+      }
+ 
+</script>
+
+</html>

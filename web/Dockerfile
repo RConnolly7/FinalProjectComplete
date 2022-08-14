@@ -1,0 +1,34 @@
+FROM php:8.0.12-fpm-alpine
+
+# Install MySQLi
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install pdo pdo_mysql
+FROM php:7.1-apache
+COPY apache2.conf /etc/apache2
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+FROM centos:7
+
+# Install Apache
+RUN yum -y update
+RUN yum -y install httpd httpd-tools
+
+# Install EPEL Repo
+RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+ && rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+# Install PHP
+RUN yum --enablerepo=remi-php73 -y install php php-bcmath php-cli php-common php-gd php-intl php-ldap php-mbstring \
+    php-mysqlnd php-pear php-soap php-xml php-xmlrpc php-zip
+
+# Update Apache Configuration
+RUN sed -E -i -e '/<Directory "\/var\/www\/html">/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
+RUN sed -E -i -e 's/DirectoryIndex (.*)$/DirectoryIndex index.php \1/g' /etc/httpd/conf/httpd.conf
+RUN 
+
+
+
+EXPOSE 80
+EXPOSE 8091
+# Start Apache
+
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]

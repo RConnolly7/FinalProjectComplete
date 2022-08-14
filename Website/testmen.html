@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<button onclick="testmen()"style="width:500px;height:500px;" ></button>
+
+    <script>
+        function tesmen(){
+            console.log("starting test")
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://host.docker.internal:8079/test.php","true");        
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    JSON.stringify({"username":"myname","password":"mypass"});
+    xhr.onload = (res) => {
+      
+      message = res['target']['response'];
+      
+      console.log(message)
+      };
+
+    xhr.send(JSON.stringify({"username":"myname","password":"mypass"}))
+    
+    console.log("ending  test") 
+}
+function testmen(){
+var xhr = new XMLHttpRequest();
+var url = "http://host.docker.internal:8079/test.php?aq=a";
+xhr.open("POST", url, true);
+xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("recon")
+        console.log(xhr.responseText);
+    }
+};
+let data = `{
+  "Id": 78912,
+  "Customer": "Jason Sweet",
+}`;
+xhr.send(JSON.stringify({'newName': data}));
+
+}
+    </script>
+</html>

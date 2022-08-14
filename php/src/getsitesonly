@@ -1,0 +1,58 @@
+<?php
+$servername = "Local instance MySQL80";
+
+$username = "root";
+$password = "Swordfish14!";
+$dbname = "'mwsitetrack'";
+$input = "a";
+$today =  date("Y-m-d");
+
+$host = 'Database';
+$user2 = "root";
+$pass2 = "example";
+$user = 'PHP';
+$pass = 'Sitetrack1!';
+$dbnm = 'mwsitetrack';
+$dbPort = "3306";
+$csvout = "";
+
+function append_string ($str1, $str2) {
+  // Using Concatenation assignment
+  // operator (.=)
+  if($str2==""){
+    $str1 .="null";
+  }else{
+  $str1 .=$str2;}
+ // Returning the result 
+  return $str1;
+}
+//phpinfo();
+//port 00 works
+$conn = new mysqli($host, $user2, $pass2,$dbnm,0);
+
+// Check connection
+// dirty csv output
+if ($result = $conn -> query("SELECT Sitename FROM Site WHERE EndDate >= $today")) {
+  // Free result set
+  
+  $row = $result->fetch_all(MYSQLI_ASSOC);
+ 
+  foreach($row as $outter){
+    foreach($outter as $OUTMOST){
+      $csvout = append_string($csvout,$OUTMOST);
+      $csvout = append_string($csvout,",");        
+    }
+  }
+  
+
+  $result -> free_result();
+}
+
+
+$sql = "SELECT Siteid,sitenum,Sitename FROM Site WHERE EndDate <= $today ";
+
+$result = $conn->query($sql);
+
+echo ($csvout);
+return $csvout;
+?> 

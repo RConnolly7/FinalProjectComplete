@@ -1,0 +1,90 @@
+.navDropdown {
+    background: #232323;
+    height: 60px;
+    display: inline-block;
+}
+ 
+.navDropdownpart li {
+    float: left;
+    list-style-type: none;
+    position: relative;
+}
+#SiteSearch {
+    width: 100%;
+    font-size: 18px;
+    padding: 11px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Style the navigation menu */
+  #SiteMenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Style the navigation links */
+  #SiteMenu li a {
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    display: block
+  }
+  
+  #SiteMenu li a:hover {
+    background-color: #eee;
+  }
+  #mySearch {
+    width: 100%;
+    font-size: 18px;
+    padding: 11px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Style the navigation menu */
+  #myMenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Style the navigation links */
+  #myMenu li a {
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    display: block
+  }
+  
+  #myMenu li a:hover {
+    background-color: #eee;
+  }
+.ClosedReportCont{
+  width:70%; margin: auto;
+}
+.OpenReportcont{
+  width:70%; margin: auto;
+}
+.OpenReport{
+  display:block
+}
+.ClosedReport{
+  display:none
+}
+.menus {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style the navigation links */
+.menus li a {
+  padding: 12px;
+  text-decoration: none;
+  color: black;
+  display: block
+}
+
+.menus li a:hover {
+  background-color: #eee;
+}

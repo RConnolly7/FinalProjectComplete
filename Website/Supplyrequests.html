@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<style>
+  /*In the style tag you will find CSS for most of the features*/
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.0 rem;
+    /* Footer height */
+  }
+
+  .fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 50%;
+  }
+
+  .fa:hover {
+    opacity: 0.7;
+  }
+
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+    float: right;
+  }
+
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+    float: right;
+  }
+
+  .fa-instagram {
+    background: #125688;
+    color: white;
+    float: right;
+
+  }
+</style>
+<!-- Welcome Section -->
+
+<head>
+  <title>Landing page</title>
+  <meta charset="utf-8"> <!-- NAVBAR StyleSheet -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="GlobalCSS.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+   
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar17">
+      <ul class="navbar-nav mr-auto">
+        <img src="Sitehours logo2.png" style="height:65px">
+        
+        <li class="nav-item"> <a class="nav-link" href="EmployeeLocations.html">Locations map</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="Accounts page.html">Accounts and Sites</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="Supplyrequests.html">Supply Requests</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="ReportsPage.html">Reports</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="">Logout</a> </li>
+      </ul>
+    </div>
+
+</nav>
+  <div>
+    <h2 style="text-align:center ;">Supply Requests</h2>
+    
+    <div id="Storage">
+      
+    </div>
+  </div>
+</body>
+<script>
+ 
+  window.onload=importAllReports()
+function CSVreader(){
+  const reader = new FileReader();
+  
+}
+function importAllReports(){
+  //CHANGE WEB ADDRESSS TO USE 
+ 
+    let xhr = new   XMLHttpRequest();
+    url= "http://host.docker.internal:8079/SendSupplyrequest.php";
+    xhr.open("POST", url,"true");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = (res) => {
+      data_from_ajax = res['target']['response'];
+      console.log(data_from_ajax)
+  var arrayofreports = data_from_ajax.split('`')
+  for(i=0;i< arrayofreports.length-1;i++){
+    console.log(arrayofreports[i])
+  createreports(arrayofreports[i])
+}
+}
+xhr.send()
+}
+function createreports(CSVFILE){
+
+  construct = CSVreader(CSVFILE)
+  StorageCon = document.getElementById("Storage")
+  document.getElementById("Storage").class = "report"
+  //for the first generated div make visible for remaining divs invisible until button is clikec
+  i=0
+  Username = construct[0]
+  console.log(construct)
+  firstoNameo = construct[1]
+  LasteoNameo = construct[2]
+  creationdate = construct[3]
+  theMessage = construct[4]
+  TheImageBase64 = construct[5]
+  TheImageWebSource = construct[5]
+  SiteID = construct[6]
+  SiteNamerino = construct[7]
+  state = construct[8]
+  console.log(construct[8]+" CONSTRUCT 8")
+  console.log(construct[9]+" CONSTRUCT 9")
+  ProblemIdent = construct[9]
+  //outer conatainer
+  report = document.createElement("div")
+  report.id = ProblemIdent +Username
+  report.style = "width:70%; margin: auto;"
+  if(state=="open"){
+    report.class =("OpenReport")    
+    }else{
+      report.class =("ClosedReport")
+    }
+  document.getElementById("Storage").appendChild(report)
+//inner container
+  reportcontainer = document.createElement("div")
+  reportcontainer.id = ProblemIdent+firstoNameo
+  if(state=="open"){
+    reportcontainer.class =("OpenReportCont")    
+    }else{
+      reportcontainer.class= ("ClosedReportCont")
+    }
+    report.appendChild(reportcontainer)
+    
+//name 
+  ForefacingName = document.createElement("P")
+  ForefacingName.id = ProblemIdent+LasteoNameo
+  ForefacingName.style="float: left;"
+
+  ForefacingName.innerHTML = firstoNameo + " " + LasteoNameo
+ 
+  ForefacingName.text = firstoNameo + " " + LasteoNameo
+  reportcontainer.appendChild(ForefacingName)
+//the date 
+  ThedatePara = document.createElement("P")
+  ThedatePara.id = ProblemIdent+LasteoNameo
+  ThedatePara.style="float: right;"
+  ThedatePara.innerHTML = creationdate
+  ThedatePara.text = creationdate
+  reportcontainer.appendChild(ThedatePara)
+//spacer
+  spacer = document.createElement("BR")
+  reportcontainer.appendChild(spacer)
+//the container will contain the message and image
+  messageContainer = document.createElement("div")
+  messageContainer.id = ProblemIdent+"Message container"
+  messageContainer.class = "messagecontainer"
+  messageContainer.style="display: flex;"
+  reportcontainer.appendChild(messageContainer)
+//the message
+ThedatePara = document.createElement("P")
+  ThedatePara.id = ProblemIdent+LasteoNameo+LasteoNameo
+  ThedatePara.style="display: flex;width:70%;"
+  ThedatePara.innerHTML = theMessage
+  messageContainer.appendChild(ThedatePara)
+  //the image we have two ways to do this truth be told we are going to reference the image location but I will leave in the commented code to get the base64 version just incase
+  if(TheImageWebSource!="NoImageProvided"){
+  TheImageWebSource = document.createElement("img")
+  TheImageWebSource.id = ProblemIdent+LasteoNameo+"image"
+  TheImageWebSource.style="display: flex; width:15%;"
+  TheImageWebSource.src = TheImageBase64
+  messageContainer.appendChild(TheImageWebSource)
+/*
+  var TheimageToUsedinSituation2 = new Image();
+  image.src = 'data:image/png;base64,'+TheImageBase64+';'
+  TheImageWebSource = document.createElement("img")
+  TheImageWebSource.id = ProblemIdent+LasteoNameo+"image"
+  TheImageWebSource.style="display: flex; width:15%;"
+  TheImageWebSource.src = TheimageToUsedinSituation2
+  messageContainer.appendChild(TheImageWebSource)
+  */
+console.log("ping ")
+ CloseButton = document.createElement("button")
+ CloseButton.value = SiteID
+ CloseButton.type = "button" 
+ console.log("ping ")
+ CloseButton.id = ProblemIdent+"button"
+ CloseButton.style = "width:125px;float:right;"
+ CloseButton.addEventListener("click",function(){
+   console.log("Attmpt")
+   ToggleRepStatus(this.value)
+ })
+ CloseButton.innerHTML = "Close/Open"
+ reportcontainer.appendChild(CloseButton)
+  }
+}
+function ToggleRepStatus(ProbId){
+  console.log(ProbId + " [rpbr")
+  
+  let xhr = new   XMLHttpRequest();
+    header = "?Pid="+ProbId
+    url= "http://host.docker.internal:8079/togglerequest.php";
+    xhr.open("POST", url,"true");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = (res) => {
+      data_from_ajax = res['target']['response'];
+      console.log("done")
+    }
+    xhr.send
+    
+}
+
+ function CSVreader(CSVfile){
+  var CSVEater = CSVfile.split(',')
+  return CSVEater
+ }
+</script>
+</html>
