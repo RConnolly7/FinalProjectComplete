@@ -69,21 +69,60 @@
         <li class="nav-item"> <a class="nav-link" href="Accounts page.html">Accounts and Sites</a> </li>
         <li class="nav-item"> <a class="nav-link" href="Supplyrequests.html">Supply Requests</a> </li>
         <li class="nav-item"> <a class="nav-link" href="ReportsPage.html">Reports</a> </li>
-        <li class="nav-item"> <a class="nav-link" href="">Logout</a> </li>
+        <li class="nav-item"> <a class="nav-link"  onclick="logout()" href="">Logout</a> </li>
       </ul>
     </div>
 
 </nav>
   <div>
     <h2 style="text-align:center ;">Supply Requests</h2>
-    
+    <button style="display: flex;float: left;"onclick="showhide()" id="showhidebutton"> Show Closed</button>
+    <br>
     <div id="Storage">
       
     </div>
   </div>
 </body>
 <script>
- 
+  showhidestatus = false
+ function showhide(){
+  button = document.getElementById("showhidebutton")
+  hiddenclass = document.getElementsByClassName("ClosedReport")
+  if(showhidestatus==false){
+    console.log(showhidestatus==true)
+    for(k=0;k<hiddenclass.length;k++){
+    hiddenclass[k].style.display = "block";
+    button.innerHTML = "Hide closed"
+  }  
+    }else{
+    for(k=0;k<hiddenclass.length;k++){
+    hiddenclass[k].style.display = "none";
+    button.innerHTML = "Show closed"
+  }    
+}
+showhidestatus = !showhidestatus
+}
+ window.onload = function () {
+    function getCookie(status) {
+      let name = status + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let cookiesplitup = decodedCookie.split(';');
+      for (i = 0; i < cookiesplitup.length; i++) {
+        let a = cookiesplitup[i];
+        while (a.charAt(0) == ' ') {
+          a = a.substring(1);
+        }
+        if (a.indexOf(name) == 0) {
+          return c.substring(name.length, a.length);
+        }
+      }
+      return "";
+    }
+
+    if (getCookie != "True") {
+      window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+    }
+  }
   window.onload=importAllReports()
 function CSVreader(){
   const reader = new FileReader();
@@ -101,9 +140,13 @@ function importAllReports(){
       data_from_ajax = res['target']['response'];
       console.log(data_from_ajax)
   var arrayofreports = data_from_ajax.split('`')
-  for(i=0;i< arrayofreports.length-1;i++){
-    console.log(arrayofreports[i])
-  createreports(arrayofreports[i])
+  console.log(arrayofreports.length+" Here ia ma")
+  console.log(arrayofreports+ "Here ia dalam")
+
+  for(j=0;j< arrayofreports.length-1;j=j+1){
+    console.log("array of reports: " + j)
+    console.log(arrayofreports[j])
+    createreports(arrayofreports[j])
 }
 }
 xhr.send()
@@ -116,7 +159,6 @@ function createreports(CSVFILE){
   //for the first generated div make visible for remaining divs invisible until button is clikec
   i=0
   Username = construct[0]
-  console.log(construct)
   firstoNameo = construct[1]
   LasteoNameo = construct[2]
   creationdate = construct[3]
@@ -126,26 +168,26 @@ function createreports(CSVFILE){
   SiteID = construct[6]
   SiteNamerino = construct[7]
   state = construct[8]
-  console.log(construct[8]+" CONSTRUCT 8")
-  console.log(construct[9]+" CONSTRUCT 9")
   ProblemIdent = construct[9]
   //outer conatainer
   report = document.createElement("div")
   report.id = ProblemIdent +Username
-  report.style = "width:70%; margin: auto;"
-  if(state=="open"){
-    report.class =("OpenReport")    
+  report.style = "width: 70%; margin: auto;padding: 30px;"
+  
+  if(state=="Open"){
+    report.className  += ("OpenReport")
     }else{
-      report.class =("ClosedReport")
+      report.className  += ("ClosedReport")
     }
   document.getElementById("Storage").appendChild(report)
 //inner container
   reportcontainer = document.createElement("div")
   reportcontainer.id = ProblemIdent+firstoNameo
+  console.log("this is the state "+state)
   if(state=="open"){
-    reportcontainer.class =("OpenReportCont")    
+    reportcontainer.className  = ("OpenReportCont")    
     }else{
-      reportcontainer.class= ("ClosedReportCont")
+      reportcontainer.className  = ("ClosedReportCont")
     }
     report.appendChild(reportcontainer)
     
@@ -168,6 +210,8 @@ function createreports(CSVFILE){
 //spacer
   spacer = document.createElement("BR")
   reportcontainer.appendChild(spacer)
+  spacer = document.createElement("BR")
+  report.appendChild(spacer)
 //the container will contain the message and image
   messageContainer = document.createElement("div")
   messageContainer.id = ProblemIdent+"Message container"
@@ -181,12 +225,19 @@ ThedatePara = document.createElement("P")
   ThedatePara.innerHTML = theMessage
   messageContainer.appendChild(ThedatePara)
   //the image we have two ways to do this truth be told we are going to reference the image location but I will leave in the commented code to get the base64 version just incase
-  if(TheImageWebSource!="NoImageProvided"){
+  if(TheImageWebSource!="null"){
   TheImageWebSource = document.createElement("img")
   TheImageWebSource.id = ProblemIdent+LasteoNameo+"image"
   TheImageWebSource.style="display: flex; width:15%;"
   TheImageWebSource.src = TheImageBase64
   messageContainer.appendChild(TheImageWebSource)
+  }else{
+  TheImageWebSource = document.createElement("img")
+  TheImageWebSource.id = ProblemIdent+LasteoNameo+"image"
+  TheImageWebSource.style="display: flex; width:15%;"
+  TheImageWebSource.src = "null.png"
+  messageContainer.appendChild(TheImageWebSource)
+  }
 /*
   var TheimageToUsedinSituation2 = new Image();
   image.src = 'data:image/png;base64,'+TheImageBase64+';'
@@ -210,7 +261,7 @@ console.log("ping ")
  CloseButton.innerHTML = "Close/Open"
  reportcontainer.appendChild(CloseButton)
   }
-}
+
 function ToggleRepStatus(ProbId){
   console.log(ProbId + " [rpbr")
   
@@ -232,5 +283,9 @@ function ToggleRepStatus(ProbId){
   var CSVEater = CSVfile.split(',')
   return CSVEater
  }
+ function logout() {
+    document.cookie = "logged=;"
+    window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+  }
 </script>
 </html>

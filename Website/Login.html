@@ -57,14 +57,15 @@
     <br>
     <div style="display: flex;justify-content: center;">
         <div>
-          <p id="errormessage" style="display: none;"></p>
+          <p id="errormessage" style="display: none;position: absolute;"></p>
+          <br>
             <P style="margin-bottom: 0px;">Username</P>
 
             <input id="usernameinp">
             </input>
             <br>
             <P  style="margin-bottom: 0px;">password</P>
-            <input id="Passwordinp">
+            <input id="Passwordinp" type="password">
             </input>
             <br>
             <button id="LoginButton" style="width:fit-contents;height: 30px;display: block;margin-top: 5px;" onclick="loginfunction()">
@@ -79,6 +80,30 @@
 
 </body>
 <script>
+setCookie("logged","True",2)
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+    getCookie("logged")
+  
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+  console.log()
   errorfellow = document.getElementById("errormessage")
 document.getElementById("LoginButton").addEventListener("click", test3());
 
@@ -198,10 +223,12 @@ xhr.onerror = function() {
     errorfellow.style = "display:block;"
 }
 }
+//this is the final and functional login
 function loginfunction(){
   let xhr = new XMLHttpRequest();
   username = document.getElementById("usernameinp").value
   password = document.getElementById("Passwordinp").value
+  errorfellow = document.getElementById("errormessage")
   headerdata="?username="+username+"&password="+password;
   url = "http://host.docker.internal:8079/UserlogMan.php"+headerdata
   console.log(url)
@@ -215,8 +242,24 @@ function loginfunction(){
       console.log(res['target']['response']);
       message = res['target']['response'];
       if (message == "success"){
-        open("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Accounts%20page.html")
-        
+        window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Accounts%20page.html")
+        document.cookie = "logged=True; path=;"
+      }else{
+        errorfellow.style.display = "block"
+        errorfellow.innerHTML = "Your Username or password is incorrect" 
+      }
+      if(username==""){
+        errorfellow.style.display = "block"
+        errorfellow.innerHTML = "You must input a username" 
+      }
+      if(password==""){
+        errorfellow.style.display = "block"
+        errorfellow.innerHTML = "You must input a password" 
+      }
+      if(password=="" & username ==""){
+        errorfellow.style.display = "block"
+        errorfellow.style.textAlign = "center"; 
+        errorfellow.innerHTML = "You must input a username and password" 
       }
     }
     xhr.send();

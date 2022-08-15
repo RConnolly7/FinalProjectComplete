@@ -39,5 +39,31 @@ let data = `{
 xhr.send(JSON.stringify({'newName': data}));
 
 }
+
+window.onload = function () {
+    function getCookie(status) {
+      let name = status + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let cookiesplitup = decodedCookie.split(';');
+      for (let i = 0; i < cookiesplitup.length; i++) {
+        let a = cookiesplitup[i];
+        while (a.charAt(0) == ' ') {
+          a = a.substring(1);
+        }
+        if (a.indexOf(name) == 0) {
+          return c.substring(name.length, a.length);
+        }
+      }
+      return "";
+    }
+
+    if (getCookie != "True") {
+      window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+    }
+  }
+  function logout() {
+    document.cookie = "logged=;"
+    window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+  }
     </script>
 </html>

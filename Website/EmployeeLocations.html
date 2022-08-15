@@ -69,7 +69,7 @@
         <li class="nav-item"> <a class="nav-link" href="Accounts page.html">Accounts and Sites</a> </li>
         <li class="nav-item"> <a class="nav-link" href="Supplyrequests.html">Supply Requests</a> </li>
         <li class="nav-item"> <a class="nav-link" href="ReportsPage.html">Reports</a> </li>
-        <li class="nav-item"> <a class="nav-link" href="">Logout</a> </li>
+        <li class="nav-item"> <a class="nav-link"  onclick="logout()" href="">Logout</a> </li>
       </ul>
     </div>
 
@@ -104,7 +104,7 @@
         
       </div>
         <ul id="timechoice" style="display:none ;position: absolute;" class="menus">
-          <li><a href="#">error</a></li>
+          
         </ul>
         
       </div>
@@ -122,9 +122,30 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAA-5bmH-JKyTa0i7YsRZ2Iw3D
 </script>
 
 <script>
+  
   var locations
   window.onload = function() {
     startup();
+
+    function getCookie(status) {
+  let name = status + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let cookiesplitup = decodedCookie.split(';');
+  for(let i = 0; i <cookiesplitup.length; i++) {
+    let a = cookiesplitup[i];
+    while (a.charAt(0) == ' ') {
+      a = a.substring(1);
+    }
+    if (a.indexOf(name) == 0) {
+      return a.substring(name.length, a.length);
+    }
+  }
+  return "";
+}
+
+  if(getCookie("logged")!="True" ){
+    window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+  }
   }
   
 function Mapmake(locations){
@@ -599,5 +620,9 @@ function MakeTime(){
     getEidehours(passme)
   }
 }
+function logout() {
+    document.cookie = "logged=;"
+    window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+  }
 </script>
 </html>

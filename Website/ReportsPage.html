@@ -69,19 +69,61 @@
         <li class="nav-item"> <a class="nav-link" href="Accounts page.html">Accounts and Sites</a> </li>
         <li class="nav-item"> <a class="nav-link" href="Supplyrequests.html">Supply Requests</a> </li>
         <li class="nav-item"> <a class="nav-link" href="ReportsPage.html">Reports</a> </li>
-        <li class="nav-item"> <a class="nav-link" href="">Logout</a> </li>
+        <li class="nav-item"> <a class="nav-link"  onclick="logout()" href="">Logout</a> </li>
       </ul>
     </div>
 
 </nav>
-  <div>
-    <h2 style="text-align:center ;">Reports</h2>
-    <div id="Storage">
+      <h2 style="text-align:center ;">Supply Requests</h2>
+      <button style="display: flex;float: left;"onclick="showhide()" id="showhidebutton"> Show Closed</button>
+      <br>
+      <div id="Storage">
 
     </div>
   </div>
 </body>
 <script>
+  
+showhidestatus = false
+ function showhide(){
+  button = document.getElementById("showhidebutton")
+  hiddenclass = document.getElementsByClassName("ClosedReport")
+  if(showhidestatus==false){
+    console.log(showhidestatus==true)
+    for(k=0;k<hiddenclass.length;k++){
+    hiddenclass[k].style.display = "block";
+    button.innerHTML = "Hide closed"
+  }  
+    }else{
+    for(k=0;k<hiddenclass.length;k++){
+    hiddenclass[k].style.display = "none";
+    button.innerHTML = "Show closed"
+  }    
+}
+showhidestatus = !showhidestatus
+}
+
+  window.onload = function () {
+    function getCookie(status) {
+      let name = status + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let cookiesplitup = decodedCookie.split(';');
+      for (let i = 0; i < cookiesplitup.length; i++) {
+        let a = cookiesplitup[i];
+        while (a.charAt(0) == ' ') {
+          a = a.substring(1);
+        }
+        if (a.indexOf(name) == 0) {
+          return c.substring(name.length, a.length);
+        }
+      }
+      return "";
+    }
+
+    if (getCookie != "True") {
+      window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+    }
+  }
   window.onload=importAllReports()
 function CSVreader(){
   const reader = new FileReader();
@@ -129,20 +171,22 @@ function createreports(CSVFILE){
   //outer conatainer
   report = document.createElement("div")
   report.id = ProblemIdent +Username
-  report.style = "width:70%; margin: auto;"
-  if(state=="open"){
-    report.class =("OpenReport")    
+  report.style = "width: 70%; margin: auto;padding: 30px;"
+  
+  if(state=="Open"){
+    report.className  += ("OpenReport")
     }else{
-      report.class =("ClosedReport")
+      report.className  += ("ClosedReport")
     }
   document.getElementById("Storage").appendChild(report)
 //inner container
   reportcontainer = document.createElement("div")
-  reportcontainer.id = ProblemIdent.toString()+firstoNameo
+  reportcontainer.id = ProblemIdent+firstoNameo
+  console.log("this is the state "+state)
   if(state=="open"){
-    reportcontainer.class =("OpenReportCont")    
+    reportcontainer.className  = ("OpenReportCont")    
     }else{
-      reportcontainer.class= ("ClosedReportCont")
+      reportcontainer.className  = ("ClosedReportCont")
     }
     report.appendChild(reportcontainer)
     
@@ -227,5 +271,9 @@ function ToggleRepStatus(ProbId){
   var CSVEater = CSVfile.split(',')
   return CSVEater
  }
+ function logout() {
+    document.cookie = "logged=;"
+    window.location = ("file:///H:/Documents%20two/Stlproject/Server%20Management/Website/Login.html")
+  }
 </script>
 </html>
